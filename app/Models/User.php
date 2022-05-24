@@ -1,13 +1,12 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Car;
-use App\Models\Trip;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
@@ -33,8 +32,17 @@ class User extends Authenticatable
     ];
 
     /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeTrips($query)
+    {
+        return $query->find(Auth::user()->id)->trips->sortByDesc('date');
+    }
+
+    /**
      *
-     * Get the cars for user.
+     * Get the cars for the user.
      */
     public function cars(): HasMany
     {
@@ -43,7 +51,7 @@ class User extends Authenticatable
 
     /**
      *
-     * Get all of the trips for user.
+     * Get the trips for the user.
      */
     public function trips(): HasManyThrough
     {

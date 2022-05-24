@@ -1,12 +1,12 @@
 <template>
     <v-app>
         <v-navigation-drawer
-                app
-                :clipped="true"
+            :clipped="true"
+            app
         >
             <v-list dense>
                 <v-list-tile
-                        @click="goTo('/trips')"
+                    @click="goTo('/trips')"
                 >
                     <v-list-tile-action>
                         <v-icon>
@@ -22,7 +22,7 @@
                 </v-list-tile>
 
                 <v-list-tile
-                        @click="goTo('/cars')"
+                    @click="goTo('/cars')"
                 >
                     <v-list-tile-action>
                         <v-icon>
@@ -40,23 +40,24 @@
 
         </v-navigation-drawer>
         <v-toolbar
-                app
-                fixed
-                :clippedLeft="true"
+            :clippedLeft="true"
+            app
+            fixed
         >
             <v-toolbar-title>
                 <span class="hidden-sm-and-down">Trax</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
-            <span class="name">{{name}}</span>
+            <span class="name">{{ name }}</span>
             <v-btn
                 @click="goTo('/logout')"
-            >Log Out</v-btn>
+            >Log Out
+            </v-btn>
         </v-toolbar>
 
         <v-content>
             <v-container
-                    fluid
+                fluid
             >
                 <router-view></router-view>
             </v-container>
@@ -65,53 +66,53 @@
 </template>
 
 <script>
-    export default {
-        props: [],
-        mounted() {
-            console.log('Component traxRoot mounted.')
-            this.fetchUserName();
+export default {
+    props: [],
+    mounted() {
+        console.log('Component traxRoot mounted.')
+        this.fetchUserName();
+    },
+    created() {
+        console.log('Component traxRoot created.')
+    },
+    data() {
+        return {
+            name: null
+        }
+    },
+    watch: {},
+    computed: {},
+    methods: {
+        fetchUserName() {
+            axios.get('/api/user/')
+                .then(response => {
+                    this.name = response.data.name;
+                }).catch(e => {
+                console.log(e);
+            })
         },
-        created() {
-            console.log('Component traxRoot created.')
-        },
-        data() {
-            return {
-                name: null
+        goTo(url) {
+            if (url === '/logout') {
+                axios.post(url, {}
+                ).then(response => {
+                    window.location.replace(location.protocol + '//' + location.host); // Redirect to page with correct port
+                }).catch(e => {
+                    window.location.replace(location.protocol + '//' + location.host);
+                })
+            } else {
+                this.$router.push(url);
             }
         },
-        watch: {},
-        computed: {},
-        methods: {
-            fetchUserName() {
-                axios.get('/api/user/')
-                    .then(response => {
-                        this.name = response.data.name;
-                    }).catch(e => {
-                    console.log(e);
-                })
-            },
-            goTo(url) {
-                if(url === '/logout') {
-                    axios.post(url, {}
-                    ).then(response => {
-                       window.location.replace(location.protocol + '//' + location.host); // Redirect to page with correct port
-                    }).catch(e => {
-                        window.location.replace(location.protocol + '//' + location.host);
-                    })
-                } else {
-                    this.$router.push(url);
-                }
-            },
-        },
-        components: {
-            'trips-view' : require('./partials/TripsView.vue')
-        }
+    },
+    components: {
+        'trips-view': require('./partials/TripsView.vue')
     }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
 
-    .name {
-        padding-right: 10px;
-    }
+.name {
+    padding-right: 10px;
+}
 </style>

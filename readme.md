@@ -33,6 +33,7 @@ functional API for Trax. You are being ask to:
   Scopes, Resources, Policies, Unit Tests, etc.
 
 ---
+
 ### Getting Started
 
 Perform the following steps to get started with the coding simulation.
@@ -41,11 +42,13 @@ Perform the following steps to get started with the coding simulation.
 - Clone this repo onto your development machine.
 
 If you have Docker version 20.10.14 or higher, please do:
+
 ```
 DockerDesktop > Preferences > General > OFF the checkbox "Use Docker Compose V2"
 ```
 
 Setup your working environment by executing the following commands:
+
 ```
 cd <trax repo directory>
 git submodule update --init --recursive
@@ -60,21 +63,25 @@ docker-compose exec workspace php artisan migrate
 ``` 
 
 If You have any issues with python libraries (on MacOS M1 computers) before `npm install` run:
+
 ```
 docker-compose exec workspace apt-get update
 docker-compose exec workspace apt-get install python
 ```
 
 At this point you can open http://localhost:8888/ and start using the mock-API backed application. As a first step, you
-should click ‘Register’ in the upper right to create an account and enter the application. 
+should click ‘Register’ in the upper right to create an account and enter the application.
 
 Should you make changes to
 any of the JS files, such as /resources/assets/js/traxAPI.js, you can run the following in order to compile your changes
+
 ```
 cd <trax repo directory>/laradock
 docker-compose exec workspace npm run dev 
 ```
+
 Or to watch for any JS changes you can run
+
 ```
 cd <trax repo directory>/laradock
 docker-compose exec workspace npm run watch 

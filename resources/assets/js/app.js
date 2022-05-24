@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -26,7 +25,7 @@ Vue.component('new-trip-view', require('./components/partials/NewTripView.vue'))
 
 // Create Router
 
-require ('./routing-config');
+require('./routing-config');
 const router = new VueRouter({
     routes: routes(Vue) // short for `routes: routes`
 })
